@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>VisionStay | Admin Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin_dashboard.css') }}">
+</head>
+
+<body>
+
+<!-- ================= TOP BAR ================= -->
+<header class="topbar">
+    <div class="logo">
+        <span class="logo-icon">🏠</span>
+        <span>VisionStay</span>
+    </div>
+    <div class="top-actions">
+        <span class="current-date" id="currentDate"></span>
+        <span class="admin-name">👤 Admin</span>
+        <a href="/logout" class="logout-btn">Logout</a>
+    </div>
+</header>
+
+<!-- ================= MAIN CONTAINER ================= -->
+<div class="container">
+
+    <!-- ========== SIDEBAR ========== -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h3>Navigation</h3>
+        </div>
+        <ul>
+            <li class="active" onclick="loadSection('home')">
+                <span class="nav-icon">🏠</span>
+                <span>Dashboard</span>
+            </li>
+            <li onclick="loadSection('students')">
+                <span class="nav-icon">👨‍🎓</span>
+                <span>Student Management</span>
+            </li>
+            <li onclick="loadSection('live')">
+                <span class="nav-icon">📷</span>
+                <span>Live Detection</span>
+            </li>
+            <li onclick="loadSection('dayscholars')">
+                <span class="nav-icon">🏫</span>
+                <span>Day Scholars</span>
+            </li>
+            <li onclick="loadSection('analytics')">
+                <span class="nav-icon">📊</span>
+                <span>Analytics</span>
+            </li>
+            <li onclick="loadSection('bot')">
+                <span class="nav-icon">🤖</span>
+                <span>AI Assistant</span>
+            </li>
+        </ul>
+        <div class="sidebar-footer">
+            <p>VisionStay v1.0</p>
+        </div>
+    </aside>
+
+    <!-- ========== CONTENT AREA ========== -->
+    <main class="content">
+
+        <!-- DASHBOARD HOME -->
+        <section id="home" class="section active">
+            
+            <!-- Welcome Banner -->
+            <div class="welcome-banner">
+                <div class="welcome-text">
+                    <h1>Welcome back, Admin!</h1>
+                    <p>Monitor hostel security, manage students, and oversee AI-powered surveillance from one place.</p>
+                </div>
+                <div class="welcome-illustration">
+                    <div class="illustration-circle">
+                        <span>🛡️</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Stats Grid -->
+            <div class="stats-grid">
+                <div class="stat-card gradient-blue">
+                    <div class="stat-icon">👨‍🎓</div>
+                    <div class="stat-details">
+                        <span class="stat-number" id="statTotalStudents">--</span>
+                        <span class="stat-label">Total Students</span>
+                    </div>
+                    <div class="stat-trend up">
+                        <span>Registered</span>
+                    </div>
+                </div>
+                
+                <div class="stat-card gradient-green">
+                    <div class="stat-icon">🏠</div>
+                    <div class="stat-details">
+                        <span class="stat-number" id="statHostellers">--</span>
+                        <span class="stat-label">Hostellers</span>
+                    </div>
+                    <div class="stat-trend">
+                        <span>In-campus</span>
+                    </div>
+                </div>
+                
+                <div class="stat-card gradient-orange">
+                    <div class="stat-icon">📍</div>
+                    <div class="stat-details">
+                        <span class="stat-number" id="statEntriesToday">--</span>
+                        <span class="stat-label">Entries Today</span>
+                    </div>
+                    <div class="stat-trend">
+                        <span>Detected</span>
+                    </div>
+                </div>
+                
+                <div class="stat-card gradient-red">
+                    <div class="stat-icon">⚠️</div>
+                    <div class="stat-details">
+                        <span class="stat-number" id="statAlerts">--</span>
+                        <span class="stat-label">Security Alerts</span>
+                    </div>
+                    <div class="stat-trend alert">
+                        <span>Needs Review</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="quick-actions-section">
+                <h2>Quick Actions</h2>
+                <div class="quick-actions-grid">
+                    <a href="/admin/students/add" class="quick-action-card">
+                        <div class="action-icon blue">➕</div>
+                        <div class="action-info">
+                            <h4>Add Student</h4>
+                            <p>Register new student</p>
+                        </div>
+                    </a>
+                    
+                    <a href="/admin/live_detection" class="quick-action-card">
+                        <div class="action-icon green">📷</div>
+                        <div class="action-info">
+                            <h4>Live Detection</h4>
+                            <p>Start monitoring</p>
+                        </div>
+                    </a>
+                    
+                    <a href="/admin/analytics" class="quick-action-card">
+                        <div class="action-icon purple">📊</div>
+                        <div class="action-info">
+                            <h4>View Analytics</h4>
+                            <p>Attendance reports</p>
+                        </div>
+                    </a>
+                    
+                    <a href="/admin/bot" class="quick-action-card">
+                        <div class="action-icon orange">🤖</div>
+                        <div class="action-info">
+                            <h4>AI Assistant</h4>
+                            <p>Ask questions</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Features Overview -->
+            <div class="features-section">
+                <h2>System Features</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">🎯</div>
+                        <h4>Face Recognition</h4>
+                        <p>AI-powered facial recognition using Siamese networks for accurate student identification.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🎭</div>
+                        <h4>Mask Detection</h4>
+                        <p>Identifies persons wearing masks to prevent unauthorized entry attempts.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📧</div>
+                        <h4>Auto Notifications</h4>
+                        <p>Automatic email alerts for day scholars entering hostel premises.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📈</div>
+                        <h4>Smart Analytics</h4>
+                        <p>Comprehensive attendance tracking with visual charts and exportable reports.</p>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- STUDENT CRUD -->
+        <section id="students" class="section">
+            <div class="section-header">
+                <h2>👨‍🎓 Student Management</h2>
+                <p>Add, view, update and delete student records.</p>
+            </div>
+
+            <div class="action-buttons">
+                <a href="/admin/students/add" class="action-btn primary">
+                    <span class="btn-icon">➕</span>
+                    <span>Add Student</span>
+                </a>
+                <a href="/admin/students/view" class="action-btn secondary">
+                    <span class="btn-icon">👁</span>
+                    <span>View Students</span>
+                </a>
+            </div>
+
+            <div class="info-card">
+                <span class="info-icon">💡</span>
+                <p>Update and Delete actions are available inside the student list view.</p>
+            </div>
+        </section>
+
+        <!-- LIVE FACE DETECTION -->
+        <section id="live" class="section">
+            <div class="section-header">
+                <h2>📷 Live Face Detection</h2>
+                <p>Real-time monitoring of hostel entry points. View detected, unknown, and masked persons.</p>
+            </div>
+
+            <div class="detection-preview">
+                <div class="preview-icon">🎥</div>
+                <h3>Start Monitoring</h3>
+                <p>Process captured frames and identify students entering the hostel.</p>
+                <a href="/admin/live_detection" class="btn primary-btn">
+                    ▶ Go to Live Detection
+                </a>
+            </div>
+        </section>
+
+        <!-- DAY SCHOLARS -->
+        <section id="dayscholars" class="section">
+            <div class="section-header">
+                <h2>🏫 Day Scholars Entry</h2>
+                <p>Monitor non-hostel student access to hostel premises.</p>
+            </div>
+
+            <div class="filter-bar">
+                <div class="date-filters">
+                    <label>Start Date:</label>
+                    <input type="date" id="dsStartDate">
+                    <label>End Date:</label>
+                    <input type="date" id="dsEndDate">
+                    <button class="filter-btn" onclick="loadDayScholars()">🔍 Filter</button>
+                    <button class="clear-btn" onclick="clearDSFilter()">✕ Clear</button>
+                </div>
+                <button class="send-all-btn" onclick="sendAllEmails(event)">📧 Send All Pending Emails</button>
+            </div>
+
+            <div class="ds-stats">
+                <span id="dsCount">0 day scholars detected</span>
+                <span id="dsPending">0 pending emails</span>
+            </div>
+
+            <div class="ds-grid" id="dsGrid">
+                <div class="empty-state">
+                    <div class="empty-icon">📋</div>
+                    <p>Select date range and click Filter to load day scholar entries</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ANALYTICS -->
+        <section id="analytics" class="section">
+            <div class="section-header">
+                <h2>📊 Analytics Dashboard</h2>
+                <p>Attendance trends, entry patterns, and behavioral analysis.</p>
+            </div>
+
+            <div class="analytics-preview">
+                <div class="preview-cards">
+                    <div class="mini-card">📈 Trends</div>
+                    <div class="mini-card">📊 Charts</div>
+                    <div class="mini-card">📋 Reports</div>
+                </div>
+                <a href="/admin/analytics" class="btn primary-btn">
+                    📈 Go to Analytics
+                </a>
+            </div>
+        </section>
+
+        <!-- AI BOT -->
+        <section id="bot" class="section">
+            <div class="section-header">
+                <h2>🤖 AI Assistant</h2>
+                <p>Ask questions and receive security insights powered by Groq AI.</p>
+            </div>
+
+            <div class="bot-preview">
+                <div class="bot-icon">🤖</div>
+                <h3>Chat with AI</h3>
+                <p>Get instant answers about students, attendance, and security data.</p>
+                <a href="/admin/bot" class="btn primary-btn">
+                    💬 Open AI Assistant
+                </a>
+            </div>
+        </section>
+
+    </main>
+</div>
+
+<script src="{{ url_for('static', filename='js/admin_dashboard.js') }}"></script>
+</body>
+</html>

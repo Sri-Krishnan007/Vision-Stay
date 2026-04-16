@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>VisionStay | Live Face Detection</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin_live_detection.css') }}">
+</head>
+<body>
+
+<!-- TOP BAR -->
+<header class="topbar">
+    <div class="logo">VisionStay</div>
+    <div class="top-actions">
+        <a href="/admin/dashboard" class="back-btn">← Back to Dashboard</a>
+        <a href="/logout" class="logout-btn">Logout</a>
+    </div>
+</header>
+
+<!-- MAIN CONTAINER -->
+<div class="main-container">
+
+    <!-- LEFT PANEL: Frame Selection -->
+    <aside class="frame-panel">
+        <h3>📁 Frame Selection</h3>
+        
+        <div class="filter-section">
+            <label>Start Time:</label>
+            <input type="datetime-local" id="startTime">
+            
+            <label>End Time:</label>
+            <input type="datetime-local" id="endTime">
+            
+            <button class="filter-btn" onclick="filterFrames()">🔍 Filter</button>
+            <button class="clear-btn" onclick="clearFilter()">✕ Clear</button>
+        </div>
+
+        <div class="frame-stats">
+            <span id="frameCount">0 frames</span>
+            <button class="select-all-btn" onclick="selectAllFrames()">Select All</button>
+        </div>
+
+        <div class="frame-list" id="frameList">
+            <!-- Frames will be loaded here -->
+        </div>
+
+        <button class="detect-btn" onclick="runDetection()">
+            🚀 Run Detection
+        </button>
+    </aside>
+
+    <!-- RIGHT PANEL: Results -->
+    <main class="results-panel">
+        
+        <!-- Summary Cards -->
+        <div class="summary-cards" id="summaryCards">
+            <div class="summary-card detected" onclick="showCategory('detected')">
+                <div class="card-icon">✅</div>
+                <div class="card-info">
+                    <span class="card-count" id="detectedCount">0</span>
+                    <span class="card-label">Detected</span>
+                </div>
+            </div>
+            <div class="summary-card masked" onclick="showCategory('masked')">
+                <div class="card-icon">😷</div>
+                <div class="card-info">
+                    <span class="card-count" id="maskedCount">0</span>
+                    <span class="card-label">Masked</span>
+                </div>
+            </div>
+            <div class="summary-card unknown" onclick="showCategory('unknown')">
+                <div class="card-icon">❓</div>
+                <div class="card-info">
+                    <span class="card-count" id="unknownCount">0</span>
+                    <span class="card-label">Unknown</span>
+                </div>
+            </div>
+            <div class="summary-card siamese" onclick="showCategory('siamese_failed')">
+                <div class="card-icon">⚠️</div>
+                <div class="card-info">
+                    <span class="card-count" id="siameseCount">0</span>
+                    <span class="card-label">Siamese Failed</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Category Tabs -->
+        <div class="category-tabs">
+            <button class="tab active" data-category="all" onclick="showCategory('all')">All</button>
+            <button class="tab" data-category="detected" onclick="showCategory('detected')">Detected</button>
+            <button class="tab" data-category="masked" onclick="showCategory('masked')">Masked</button>
+            <button class="tab" data-category="unknown" onclick="showCategory('unknown')">Unknown</button>
+            <button class="tab" data-category="siamese_failed" onclick="showCategory('siamese_failed')">Siamese Failed</button>
+        </div>
+
+        <!-- Results Grid -->
+        <div class="results-grid" id="resultsGrid">
+            <div class="empty-state">
+                <p>📷 Select frames and run detection to see results</p>
+            </div>
+        </div>
+
+        <!-- Loading Overlay -->
+        <div class="loading-overlay" id="loadingOverlay">
+            <div class="spinner"></div>
+            <p>Processing frames...</p>
+        </div>
+
+    </main>
+
+</div>
+
+<!-- Image Modal -->
+<div class="modal" id="imageModal">
+    <div class="modal-content">
+        <span class="close-modal" onclick="closeModal()">&times;</span>
+        <img id="modalImage" src="" alt="Detection">
+        <div class="modal-info" id="modalInfo"></div>
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/admin_live_detection.js') }}"></script>
+</body>
+</html>

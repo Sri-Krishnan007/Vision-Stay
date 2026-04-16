@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>View Students | VisionStay</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/student_view.css') }}">
+</head>
+<body>
+
+<!-- ================= TOP BAR ================= -->
+<header class="topbar">
+    <div class="logo">
+        <a href="/admin/dashboard" class="back-link">← Back to Dashboard</a>
+        <span>Student Management</span>
+    </div>
+    <div class="top-actions">
+        <a href="/admin/students/add" class="add-btn">➕ Add New Student</a>
+    </div>
+</header>
+
+<!-- ================= MAIN CONTAINER ================= -->
+<main class="container">
+
+    <!-- Stats Cards -->
+    <div class="stats-row">
+        <div class="stat-card">
+            <div class="stat-icon blue">👨‍🎓</div>
+            <div class="stat-info">
+                <span class="stat-number" id="totalCount">{{ students|length }}</span>
+                <span class="stat-label">Total Students</span>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon green">🏠</div>
+            <div class="stat-info">
+                <span class="stat-number" id="hostellerCount">--</span>
+                <span class="stat-label">Hostellers</span>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon orange">🏫</div>
+            <div class="stat-info">
+                <span class="stat-number" id="dayscholarCount">--</span>
+                <span class="stat-label">Day Scholars</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Search and Filter Bar -->
+    <div class="filter-bar">
+        <div class="search-box">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="searchInput" placeholder="Search by name or roll number..." onkeyup="searchStudent()">
+        </div>
+        
+        <div class="filter-group">
+            <label>Filter by Type:</label>
+            <select id="typeFilter" onchange="filterByType()">
+                <option value="all">All Students</option>
+                <option value="hosteller">Hostellers Only</option>
+                <option value="dayscholar">Day Scholars Only</option>
+            </select>
+        </div>
+        
+        <div class="filter-group">
+            <label>Filter by Course:</label>
+            <select id="courseFilter" onchange="filterByCourse()">
+                <option value="all">All Courses</option>
+                {% set courses = students | map(attribute='course') | unique | list %}
+                {% for course in courses %}
+                <option value="{{ course }}">{{ course }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        
+        <button class="reset-btn" onclick="resetFilters()">✕ Reset</button>
+    </div>
+
+    <!-- Results Info -->
+    <div class="results-info">
+        <span id="resultsCount">Showing {{ students|length }} students</span>
+    </div>
+
+    <!-- Student Grid View -->
+    <div class="view-toggle">
+        <button class="view-btn active" onclick="setView('grid')" id="gridViewBtn">
+            <span>⊞</span> Grid
+        </button>
+        <button class="view-btn" onclick="setView('table')" id="tableViewBtn">
+            <span>☰</span> Table
+        </button>
+    </div>
+
+    <!-- Grid View -->
+    <div class="students-grid" id="gridView">
+        {% for s in students %}
+        <div class="student-card" 
+             data-name="{{ s.name | lower }}" 
+             data-rollno="{{ s.roll_no | lower }}"
+             data-type="{{ 'hosteller' if s.hosteller else 'dayscholar' }}"
+             data-course="{{ s.course }}">
+            
+            <div class="card-header">
+                <img src="/static/uploads/{{ s.photo }}" alt="{{ s.name }}" class="student-photo" onerror="this.src='/static/uploads/default.png'">
+                <span class="student-badge {{ 'hosteller' if s.hosteller else 'dayscholar' }}">
+                    {{ "🏠 Hosteller" if s.hosteller else "🏫 Day Scholar" }}
+                </span>
+            </div>
+            
+            <div class="card-body">
+                <h3 class="student-name">{{ s.name }}</h3>
+                <p class="student-rollno">{{ s.roll_no }}</p>
+                
+                <div class="student-details">
+                    <div class="detail-item">
+                        <span class="detail-icon">📚</span>
+                        <span>{{ s.course }}</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-icon">📅</span>
+                        <span>Year {{ s.year }}</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card-actions">
+                <a href="/admin/students/edit/{{ s.roll_no }}" class="action-btn edit">
+                    ✏️ Edit
+                </a>
+                <button class="action-btn delete" onclick="confirmDelete('{{ s.roll_no }}', '{{ s.name }}')">
+                    🗑️ Delete
+                </button>
+            </div>
+        </div>
+        {% endfor %}
+        
+        {% if students|length == 0 %}
+        <div class="empty-state">
+            <div class="empty-icon">📋</div>
+            <h3>No Students Found</h3>
+            <p>Start by adding your first student to the system.</p>
+            <a href="/admin/students/add" class="add-first-btn">➕ Add Student</a>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Table View (Hidden by default) -->
+    <div class="table-container" id="tableView" style="display: none;">
+        <table>
+            <thead>
+                <tr>
+                    <th>Photo</th>
+                    <th>Roll No</th>
+                    <th>Name</th>
+                    <th>Course</th>
+                    <th>Year</th>
+                    <th>Type</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for s in students %}
+                <tr class="student-row"
+                    data-name="{{ s.name | lower }}" 
+                    data-rollno="{{ s.roll_no | lower }}"
+                    data-type="{{ 'hosteller' if s.hosteller else 'dayscholar' }}"
+                    data-course="{{ s.course }}">
+                    <td>
+                        <img src="/static/uploads/{{ s.photo }}" alt="{{ s.name }}" class="table-photo" onerror="this.src='/static/uploads/default.png'">
+                    </td>
+                    <td class="roll-no">{{ s.roll_no }}</td>
+                    <td><strong>{{ s.name }}</strong></td>
+                    <td>{{ s.course }}</td>
+                    <td>{{ s.year }}</td>
+                    <td>
+                        <span class="type-badge {{ 'hosteller' if s.hosteller else 'dayscholar' }}">
+                            {{ "Hosteller" if s.hosteller else "Day Scholar" }}
+                        </span>
+                    </td>
+                    <td class="actions-cell">
+                        <a href="/admin/students/edit/{{ s.roll_no }}" class="table-action edit">Edit</a>
+                        <button class="table-action delete" onclick="confirmDelete('{{ s.roll_no }}', '{{ s.name }}')">Delete</button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</main>
+
+<!-- Delete Confirmation Modal -->
+<div class="modal-overlay" id="deleteModal">
+    <div class="modal">
+        <div class="modal-icon">⚠️</div>
+        <h3>Confirm Deletion</h3>
+        <p>Are you sure you want to delete <strong id="deleteStudentName"></strong>?</p>
+        <p class="modal-warning">This action cannot be undone.</p>
+        <div class="modal-actions">
+            <button class="modal-btn cancel" onclick="closeModal()">Cancel</button>
+            <a href="#" class="modal-btn confirm" id="deleteConfirmBtn">Delete</a>
+        </div>
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/student_view.js') }}"></script>
+</body>
+</html>
