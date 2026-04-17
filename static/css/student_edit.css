@@ -1,0 +1,453 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: linear-gradient(135deg, #1e3a5f 0%, #0f172a 100%);
+    min-height: 100vh;
+}
+
+/* ========== TOP BAR ========== */
+.topbar {
+    height: 65px;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    color: white;
+    display: flex;
+    align-items: center;
+    padding: 0 30px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+
+.back-link {
+    color: #60a5fa;
+    text-decoration: none;
+    font-size: 0.9rem;
+    padding: 8px 16px;
+    background: rgba(96, 165, 250, 0.1);
+    border-radius: 8px;
+    transition: all 0.3s;
+    font-weight: 500;
+}
+
+.back-link:hover {
+    background: rgba(96, 165, 250, 0.2);
+}
+
+/* ========== MAIN CONTAINER ========== */
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+/* ========== FORM CARD ========== */
+.form-card {
+    background: white;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 25px 80px rgba(0, 0, 0, 0.4);
+}
+
+/* ========== STUDENT HEADER ========== */
+.student-header {
+    background: linear-gradient(135deg, #1f2937 0%, #374151 100%);
+    padding: 40px;
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.student-photo-wrapper {
+    position: relative;
+}
+
+.student-photo {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.edit-badge {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    width: 35px;
+    height: 35px;
+    background: #3b82f6;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    border: 3px solid white;
+}
+
+.student-info {
+    color: white;
+}
+
+.student-info h1 {
+    font-size: 1.8rem;
+    margin-bottom: 5px;
+}
+
+.roll-number {
+    color: #9ca3af;
+    font-size: 1rem;
+    margin-bottom: 15px;
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 8px 16px;
+    border-radius: 25px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.status-badge.hosteller {
+    background: rgba(16, 185, 129, 0.2);
+    color: #34d399;
+}
+
+.status-badge.dayscholar {
+    background: rgba(245, 158, 11, 0.2);
+    color: #fbbf24;
+}
+
+/* ========== STUDENT FORM ========== */
+.student-form {
+    padding: 40px;
+}
+
+/* ========== FORM SECTIONS ========== */
+.form-section {
+    margin-bottom: 35px;
+}
+
+.form-section h3 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.1rem;
+    color: #1f2937;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #f3f4f6;
+}
+
+.section-icon {
+    font-size: 1.2rem;
+}
+
+/* ========== FORM GRID ========== */
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 10px;
+    font-size: 0.95rem;
+}
+
+.label-icon {
+    font-size: 1.1rem;
+}
+
+.form-group input,
+.form-group select {
+    padding: 14px 18px;
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    font-size: 1rem;
+    transition: all 0.3s;
+    background: white;
+    color: #1f2937;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+}
+
+.readonly-field {
+    background: #f9fafb !important;
+    color: #6b7280 !important;
+    cursor: not-allowed;
+}
+
+.input-hint {
+    font-size: 0.8rem;
+    color: #9ca3af;
+    margin-top: 6px;
+}
+
+/* ========== RADIO GROUP ========== */
+.radio-group {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+.radio-option {
+    cursor: pointer;
+}
+
+.radio-option input {
+    display: none;
+}
+
+.radio-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 25px;
+    background: #f8fafc;
+    border: 2px solid #e5e7eb;
+    border-radius: 16px;
+    transition: all 0.3s;
+    text-align: center;
+}
+
+.radio-option input:checked + .radio-box {
+    background: linear-gradient(135deg, #eff6ff, #dbeafe);
+    border-color: #3b82f6;
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.2);
+}
+
+.radio-icon {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+
+.radio-label {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 5px;
+}
+
+.radio-desc {
+    font-size: 0.85rem;
+    color: #6b7280;
+}
+
+/* ========== FORM ACTIONS ========== */
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    margin-top: 40px;
+    padding-top: 30px;
+    border-top: 1px solid #e5e7eb;
+}
+
+.btn-primary,
+.btn-secondary,
+.btn-danger {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 28px;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-decoration: none;
+    border: none;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: white;
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+}
+
+.btn-secondary {
+    background: #f3f4f6;
+    color: #4b5563;
+}
+
+.btn-secondary:hover {
+    background: #e5e7eb;
+}
+
+.btn-danger {
+    background: transparent;
+    color: #ef4444;
+    border: 2px solid #fecaca;
+}
+
+.btn-danger:hover {
+    background: #fef2f2;
+    border-color: #ef4444;
+}
+
+/* ========== MODAL ========== */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal-overlay.active {
+    display: flex;
+}
+
+.modal {
+    background: white;
+    border-radius: 20px;
+    padding: 40px;
+    text-align: center;
+    max-width: 420px;
+    width: 90%;
+    animation: modalIn 0.3s ease;
+}
+
+@keyframes modalIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.modal-icon {
+    font-size: 3.5rem;
+    margin-bottom: 20px;
+}
+
+.modal h3 {
+    font-size: 1.4rem;
+    color: #1f2937;
+    margin-bottom: 10px;
+}
+
+.modal p {
+    color: #6b7280;
+    margin-bottom: 10px;
+}
+
+.modal-warning {
+    font-size: 0.85rem;
+    color: #ef4444;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 15px;
+    margin-top: 25px;
+}
+
+.modal-btn {
+    flex: 1;
+    padding: 14px 20px;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-decoration: none;
+    text-align: center;
+    border: none;
+    font-size: 0.95rem;
+}
+
+.modal-btn.cancel {
+    background: #f3f4f6;
+    color: #374151;
+}
+
+.modal-btn.cancel:hover {
+    background: #e5e7eb;
+}
+
+.modal-btn.confirm {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    color: white;
+}
+
+.modal-btn.confirm:hover {
+    background: linear-gradient(135deg, #dc2626, #b91c1c);
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 768px) {
+    .container {
+        padding: 20px;
+    }
+    
+    .student-header {
+        flex-direction: column;
+        text-align: center;
+        padding: 30px 20px;
+    }
+    
+    .student-form {
+        padding: 25px;
+    }
+    
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .radio-group {
+        grid-template-columns: 1fr;
+    }
+    
+    .form-actions {
+        flex-direction: column;
+    }
+    
+    .btn-primary,
+    .btn-secondary,
+    .btn-danger {
+        width: 100%;
+        justify-content: center;
+    }
+}

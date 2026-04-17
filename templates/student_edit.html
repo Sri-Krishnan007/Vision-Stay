@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Student | VisionStay</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/student_edit.css') }}">
+</head>
+<body>
+
+<!-- ================= TOP BAR ================= -->
+<header class="topbar">
+    <div class="logo">
+        <a href="/admin/students/view" class="back-link">← Back to Students</a>
+        <span>Edit Student</span>
+    </div>
+</header>
+
+<!-- ================= MAIN CONTAINER ================= -->
+<main class="container">
+    
+    <div class="form-card">
+        
+        <!-- Student Info Header -->
+        <div class="student-header">
+            <div class="student-photo-wrapper">
+                <img src="/static/uploads/{{ student.photo }}" alt="{{ student.name }}" class="student-photo" onerror="this.src='/static/uploads/default.png'">
+                <span class="edit-badge">✏️</span>
+            </div>
+            <div class="student-info">
+                <h1>{{ student.name }}</h1>
+                <p class="roll-number">{{ student.roll_no }}</p>
+                <span class="status-badge {{ 'hosteller' if student.hosteller else 'dayscholar' }}">
+                    {{ "🏠 Hosteller" if student.hosteller else "🏫 Day Scholar" }}
+                </span>
+            </div>
+        </div>
+
+        <!-- Edit Form -->
+        <form method="POST" class="student-form" id="editForm">
+            
+            <div class="form-section">
+                <h3>
+                    <span class="section-icon">📝</span>
+                    Personal Information
+                </h3>
+                
+                <div class="form-grid">
+                    
+                    <!-- Roll Number (Read Only) -->
+                    <div class="form-group">
+                        <label for="roll_no">
+                            <span class="label-icon">🎫</span>
+                            Roll Number
+                        </label>
+                        <input type="text" value="{{ student.roll_no }}" disabled class="readonly-field">
+                        <span class="input-hint">Roll number cannot be changed</span>
+                    </div>
+
+                    <!-- Student Name -->
+                    <div class="form-group">
+                        <label for="name">
+                            <span class="label-icon">👤</span>
+                            Full Name
+                        </label>
+                        <input type="text" name="name" id="name" value="{{ student.name }}" required>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h3>
+                    <span class="section-icon">🎓</span>
+                    Academic Details
+                </h3>
+                
+                <div class="form-grid">
+                    
+                    <!-- Course -->
+                    <div class="form-group">
+                        <label for="course">
+                            <span class="label-icon">📚</span>
+                            Course / Department
+                        </label>
+                        <input type="text" name="course" id="course" value="{{ student.course }}" required>
+                    </div>
+
+                    <!-- Year -->
+                    <div class="form-group">
+                        <label for="year">
+                            <span class="label-icon">📅</span>
+                            Current Year
+                        </label>
+                        <select name="year" id="year" required>
+                            <option value="1" {{ 'selected' if student.year == '1' else '' }}>1st Year</option>
+                            <option value="2" {{ 'selected' if student.year == '2' else '' }}>2nd Year</option>
+                            <option value="3" {{ 'selected' if student.year == '3' else '' }}>3rd Year</option>
+                            <option value="4" {{ 'selected' if student.year == '4' else '' }}>4th Year</option>
+                        </select>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h3>
+                    <span class="section-icon">🏠</span>
+                    Accommodation Status
+                </h3>
+                
+                <div class="radio-group">
+                    <label class="radio-option">
+                        <input type="radio" name="hosteller" value="yes" {{ 'checked' if student.hosteller else '' }}>
+                        <span class="radio-box">
+                            <span class="radio-icon">🏠</span>
+                            <span class="radio-label">Hosteller</span>
+                            <span class="radio-desc">Lives in college hostel</span>
+                        </span>
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="hosteller" value="no" {{ 'checked' if not student.hosteller else '' }}>
+                        <span class="radio-box">
+                            <span class="radio-icon">🏫</span>
+                            <span class="radio-label">Day Scholar</span>
+                            <span class="radio-desc">Commutes from home</span>
+                        </span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Form Actions -->
+            <div class="form-actions">
+                <a href="/admin/students/view" class="btn-secondary">
+                    ✕ Cancel
+                </a>
+                <button type="button" class="btn-danger" onclick="confirmDelete()">
+                    🗑️ Delete Student
+                </button>
+                <button type="submit" class="btn-primary" id="submitBtn">
+                    <span class="btn-icon">✓</span>
+                    <span>Save Changes</span>
+                </button>
+            </div>
+
+        </form>
+
+    </div>
+
+</main>
+
+<!-- Delete Confirmation Modal -->
+<div class="modal-overlay" id="deleteModal">
+    <div class="modal">
+        <div class="modal-icon">⚠️</div>
+        <h3>Delete Student?</h3>
+        <p>Are you sure you want to delete <strong>{{ student.name }}</strong>?</p>
+        <p class="modal-warning">This action cannot be undone. All attendance records will be preserved.</p>
+        <div class="modal-actions">
+            <button class="modal-btn cancel" onclick="closeModal()">Cancel</button>
+            <a href="/admin/students/delete/{{ student.roll_no }}" class="modal-btn confirm">Delete</a>
+        </div>
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/student_edit.js') }}"></script>
+</body>
+</html>

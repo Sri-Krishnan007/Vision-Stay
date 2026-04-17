@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VisionStay | Student Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/student_dashboard.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <i class="fas fa-eye"></i>
+                <span>VisionStay</span>
+            </div>
+            <button class="sidebar-toggle" id="sidebarToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        
+        <nav class="sidebar-nav">
+            <a href="#overview" class="nav-item active" data-section="overview">
+                <i class="fas fa-home"></i>
+                <span>Overview</span>
+            </a>
+            <a href="#attendance" class="nav-item" data-section="attendance">
+                <i class="fas fa-calendar-check"></i>
+                <span>Attendance</span>
+            </a>
+            <a href="#analytics" class="nav-item" data-section="analytics">
+                <i class="fas fa-chart-line"></i>
+                <span>Analytics</span>
+            </a>
+        </nav>
+        
+        <div class="sidebar-footer">
+            <a href="/logout" class="logout-btn">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Logout</span>
+            </a>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Top Bar -->
+        <header class="topbar">
+            <div class="topbar-left">
+                <h1 id="pageTitle">Dashboard Overview</h1>
+            </div>
+            <div class="topbar-right">
+                <div class="date-display">
+                    <i class="fas fa-calendar"></i>
+                    <span id="currentDate"></span>
+                </div>
+                <div class="profile-info">
+                    <img src="{{ url_for('static', filename='uploads/' + student.photo) }}" alt="Profile" class="profile-img" id="profileImg">
+                    <span class="profile-name" id="studentName">{{ student.name }}</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Content Sections -->
+        <div class="content-wrapper">
+            
+            <!-- Overview Section -->
+            <section class="content-section active" id="overviewSection">
+                <!-- Profile Card -->
+                <div class="profile-card glass">
+                    <div class="profile-avatar">
+                        <img src="{{ url_for('static', filename='uploads/' + student.photo) }}" alt="Profile">
+                        <div class="status-badge online">Active</div>
+                    </div>
+                    <div class="profile-details">
+                        <h2 id="profileName">{{ student.name }}</h2>
+                        <p class="roll-no"><i class="fas fa-id-card"></i> <span id="profileRoll">{{ student.roll_no }}</span></p>
+                        <div class="profile-meta">
+                            <span><i class="fas fa-graduation-cap"></i> <span id="profileCourse">{{ student.course }}</span></span>
+                            <span><i class="fas fa-layer-group"></i> Year <span id="profileYear">{{ student.year }}</span></span>
+                            <span class="badge {% if student.hosteller %}hosteller{% else %}dayscholar{% endif %}">
+                                <i class="fas {% if student.hosteller %}fa-home{% else %}fa-bus{% endif %}"></i>
+                                {% if student.hosteller %}Hosteller{% else %}Day Scholar{% endif %}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stats Grid -->
+                <div class="stats-grid">
+                    <div class="stat-card gradient-blue">
+                        <div class="stat-icon">
+                            <i class="fas fa-calendar-day"></i>
+                        </div>
+                        <div class="stat-content">
+                            <span class="stat-value" id="entriesToday">--</span>
+                            <span class="stat-label">Entries Today</span>
+                        </div>
+                        <div class="stat-trend up">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card gradient-green">
+                        <div class="stat-icon">
+                            <i class="fas fa-calendar-week"></i>
+                        </div>
+                        <div class="stat-content">
+                            <span class="stat-value" id="weekPresent">--</span>
+                            <span class="stat-label">Days This Week</span>
+                        </div>
+                        <div class="stat-trend">
+                            <span id="weekPercentage">--%</span>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card gradient-purple">
+                        <div class="stat-icon">
+                            <i class="fas fa-calendar-alt"></i>
+                        </div>
+                        <div class="stat-content">
+                            <span class="stat-value" id="monthPresent">--</span>
+                            <span class="stat-label">Days This Month</span>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card gradient-orange">
+                        <div class="stat-icon">
+                            <i class="fas fa-history"></i>
+                        </div>
+                        <div class="stat-content">
+                            <span class="stat-value" id="totalEntries">--</span>
+                            <span class="stat-label">Total Entries</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Charts -->
+                <div class="charts-row">
+                    <div class="chart-card glass">
+                        <div class="chart-header">
+                            <h3><i class="fas fa-chart-area"></i> Weekly Attendance</h3>
+                        </div>
+                        <div class="chart-body">
+                            <canvas id="weeklyChart"></canvas>
+                        </div>
+                    </div>
+                    
+                    <div class="chart-card glass">
+                        <div class="chart-header">
+                            <h3><i class="fas fa-clock"></i> Today's Activity</h3>
+                        </div>
+                        <div class="chart-body">
+                            <canvas id="hourlyChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Activity -->
+                <div class="activity-card glass">
+                    <div class="card-header">
+                        <h3><i class="fas fa-history"></i> Recent Activity</h3>
+                    </div>
+                    <div class="activity-list" id="recentActivity">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Attendance Section -->
+            <section class="content-section" id="attendanceSection">
+                <div class="section-header">
+                    <h2><i class="fas fa-calendar-check"></i> Attendance History</h2>
+                    <div class="filter-controls">
+                        <select id="monthFilter">
+                            <option value="all">All Months</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Attendance Summary -->
+                <div class="attendance-summary glass">
+                    <div class="summary-item">
+                        <i class="fas fa-calendar-check"></i>
+                        <div>
+                            <span class="summary-value" id="totalDaysPresent">--</span>
+                            <span class="summary-label">Total Days Present</span>
+                        </div>
+                    </div>
+                    <div class="summary-item">
+                        <i class="fas fa-door-open"></i>
+                        <div>
+                            <span class="summary-value" id="totalEntriesAll">--</span>
+                            <span class="summary-label">Total Entries</span>
+                        </div>
+                    </div>
+                    <div class="summary-item">
+                        <i class="fas fa-percentage"></i>
+                        <div>
+                            <span class="summary-value" id="attendancePercent">--%</span>
+                            <span class="summary-label">This Week</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Attendance Calendar -->
+                <div class="attendance-calendar glass">
+                    <div class="calendar-header">
+                        <button id="prevMonth"><i class="fas fa-chevron-left"></i></button>
+                        <h3 id="calendarMonth">February 2026</h3>
+                        <button id="nextMonth"><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                    <div class="calendar-grid">
+                        <div class="calendar-day-header">Sun</div>
+                        <div class="calendar-day-header">Mon</div>
+                        <div class="calendar-day-header">Tue</div>
+                        <div class="calendar-day-header">Wed</div>
+                        <div class="calendar-day-header">Thu</div>
+                        <div class="calendar-day-header">Fri</div>
+                        <div class="calendar-day-header">Sat</div>
+                    </div>
+                    <div class="calendar-days" id="calendarDays">
+                        <!-- Populated by JS -->
+                    </div>
+                    <div class="calendar-legend">
+                        <span><i class="fas fa-circle present"></i> Present</span>
+                        <span><i class="fas fa-circle absent"></i> Absent</span>
+                        <span><i class="fas fa-circle today"></i> Today</span>
+                    </div>
+                </div>
+
+                <!-- Attendance Table -->
+                <div class="attendance-table-card glass">
+                    <div class="table-header">
+                        <h3><i class="fas fa-list"></i> Detailed Records</h3>
+                        <button class="export-btn" onclick="exportAttendance()">
+                            <i class="fas fa-download"></i> Export
+                        </button>
+                    </div>
+                    <div class="table-wrapper">
+                        <table class="attendance-table" id="attendanceTable">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Day</th>
+                                    <th>Entries</th>
+                                    <th>Entry Times</th>
+                                </tr>
+                            </thead>
+                            <tbody id="attendanceTableBody">
+                                <!-- Populated by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Analytics Section -->
+            <section class="content-section" id="analyticsSection">
+                <div class="section-header">
+                    <h2><i class="fas fa-chart-line"></i> Personal Analytics</h2>
+                </div>
+
+                <!-- Analytics Cards -->
+                <div class="analytics-grid">
+                    <div class="analytics-card glass large">
+                        <div class="card-header">
+                            <h3><i class="fas fa-chart-line"></i> 30-Day Attendance Trend</h3>
+                            <div class="chart-controls">
+                                <button class="trend-btn active" data-days="7">7D</button>
+                                <button class="trend-btn" data-days="14">14D</button>
+                                <button class="trend-btn" data-days="30">30D</button>
+                            </div>
+                        </div>
+                        <div class="chart-body large">
+                            <canvas id="trendChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="analytics-card glass">
+                        <div class="card-header">
+                            <h3><i class="fas fa-chart-pie"></i> Attendance Rate</h3>
+                        </div>
+                        <div class="chart-body">
+                            <canvas id="attendanceRateChart"></canvas>
+                        </div>
+                        <div class="chart-legend">
+                            <span class="legend-item present">Present Days</span>
+                            <span class="legend-item absent">Absent Days</span>
+                        </div>
+                    </div>
+
+                    <div class="analytics-card glass">
+                        <div class="card-header">
+                            <h3><i class="fas fa-clock"></i> Peak Hours</h3>
+                        </div>
+                        <div class="chart-body">
+                            <canvas id="peakHoursChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="analytics-card glass">
+                        <div class="card-header">
+                            <h3><i class="fas fa-calendar-week"></i> Day-wise Pattern</h3>
+                        </div>
+                        <div class="chart-body">
+                            <canvas id="dayWiseChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Insights -->
+                <div class="insights-card glass">
+                    <div class="card-header">
+                        <h3><i class="fas fa-lightbulb"></i> Insights</h3>
+                    </div>
+                    <div class="insights-grid" id="insightsGrid">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <script src="{{ url_for('static', filename='js/student_dashboard.js') }}"></script>
+</body>
+</html>

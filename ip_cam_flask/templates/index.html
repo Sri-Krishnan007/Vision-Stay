@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IP Camera Liveness Detection - VisionStay</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎥 IP Camera Surveillance + Liveness Detection</h1>
+            <p class="subtitle">640x480 @ 45Q 30FPS | Save Only When LIFE Detected</p>
+        </header>
+
+        <div class="main-content">
+            <!-- Video Feed -->
+            <div class="video-section">
+                <div class="video-container">
+                    <img id="video-feed" src="/video_feed" alt="Camera Feed" />
+                    <div class="status-badge" id="status-badge">
+                        <span class="status-dot"></span>
+                        <span class="status-text">Live</span>
+                    </div>
+                    <div class="liveness-badge" id="liveness-badge">
+                        <span class="liveness-text">UNKNOWN</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Control Panel -->
+            <div class="control-panel">
+                <!-- Recording Control -->
+                <div class="record-section">
+                    <h2>🎬 Recording Control</h2>
+                    <div class="button-group">
+                        <button class="btn btn-record-start" id="start-btn">
+                            ▶️ START RECORDING
+                        </button>
+                        <button class="btn btn-record-stop" id="stop-btn" disabled>
+                            ⏹️ STOP RECORDING
+                        </button>
+                    </div>
+                    <div class="recording-status-display">
+                        <p>Status: <span id="recording-status" class="rec-status-off">⚫ OFF</span></p>
+                    </div>
+                </div>
+
+                <!-- Liveness Detection Info -->
+                <div class="liveness-section">
+                    <h2>🔍 Liveness Detection</h2>
+                    <div class="status-info">
+                        <div class="info-row">
+                            <label>Status:</label>
+                            <span id="liveness-display">UNKNOWN</span>
+                        </div>
+                        <div class="info-row">
+                            <label>Score:</label>
+                            <span id="liveness-score">0%</span>
+                        </div>
+                        <div class="info-row">
+                            <label>Threshold:</label>
+                            <span>5%</span>
+                        </div>
+                    </div>
+                    <div class="liveness-bar">
+                        <div class="liveness-bar-fill" id="liveness-bar-fill"></div>
+                    </div>
+                </div>
+
+                <!-- Recording Stats -->
+                <div class="stats-section">
+                    <h2>� Recording Stats</h2>
+                    <div class="status-info">
+                        <div class="info-row">
+                            <label>Frames Saved:</label>
+                            <span id="frames-saved">0</span>
+                        </div>
+                        <div class="info-row">
+                            <label>Resolution:</label>
+                            <span>640 x 480</span>
+                        </div>
+                        <div class="info-row">
+                            <label>Quality:</label>
+                            <span>45</span>
+                        </div>
+                        <div class="info-row">
+                            <label>FPS:</label>
+                            <span>30</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timestamp">
+                    <p>Last Updated: <span id="last-update">--:--:--</span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/control.js') }}"></script>
+</body>
+</html>

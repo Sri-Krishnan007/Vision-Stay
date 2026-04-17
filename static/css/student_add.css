@@ -1,0 +1,391 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+}
+
+/* ========== TOP BAR ========== */
+.topbar {
+    height: 65px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    color: white;
+    display: flex;
+    align-items: center;
+    padding: 0 30px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+
+.back-link {
+    color: white;
+    text-decoration: none;
+    font-size: 0.9rem;
+    padding: 8px 16px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+    transition: all 0.3s;
+    font-weight: 500;
+}
+
+.back-link:hover {
+    background: rgba(255, 255, 255, 0.25);
+}
+
+/* ========== MAIN CONTAINER ========== */
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+/* ========== FORM CARD ========== */
+.form-card {
+    background: white;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 25px 80px rgba(0, 0, 0, 0.3);
+}
+
+/* ========== FORM HEADER ========== */
+.form-header {
+    background: linear-gradient(135deg, #1f2937 0%, #374151 100%);
+    color: white;
+    padding: 40px;
+    text-align: center;
+}
+
+.header-icon {
+    font-size: 3.5rem;
+    margin-bottom: 15px;
+}
+
+.form-header h1 {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+}
+
+.form-header p {
+    color: #9ca3af;
+    font-size: 1rem;
+}
+
+/* ========== STUDENT FORM ========== */
+.student-form {
+    padding: 40px;
+}
+
+/* ========== PHOTO UPLOAD ========== */
+.photo-upload-section {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    padding: 30px;
+    background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+    border-radius: 16px;
+    margin-bottom: 35px;
+}
+
+.photo-preview {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #e2e8f0, #cbd5e1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 4px dashed #94a3b8;
+    transition: all 0.3s;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.photo-preview:hover {
+    border-color: #3b82f6;
+}
+
+.photo-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.preview-icon {
+    font-size: 2.5rem;
+    margin-bottom: 5px;
+}
+
+.preview-text {
+    font-size: 0.8rem;
+    color: #64748b;
+}
+
+.photo-info {
+    flex: 1;
+}
+
+.photo-info h4 {
+    font-size: 1.1rem;
+    color: #1f2937;
+    margin-bottom: 8px;
+}
+
+.photo-info p {
+    color: #6b7280;
+    font-size: 0.9rem;
+    margin-bottom: 15px;
+}
+
+.upload-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    color: white;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s;
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+}
+
+.upload-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+}
+
+.upload-btn input {
+    display: none;
+}
+
+.file-name {
+    display: block;
+    margin-top: 12px;
+    font-size: 0.85rem;
+    color: #6b7280;
+}
+
+/* ========== FORM GRID ========== */
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group.full-width {
+    grid-column: span 2;
+}
+
+.form-group label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 10px;
+    font-size: 0.95rem;
+}
+
+.label-icon {
+    font-size: 1.1rem;
+}
+
+.form-group input,
+.form-group select {
+    padding: 14px 18px;
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    font-size: 1rem;
+    transition: all 0.3s;
+    background: white;
+    color: #1f2937;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+}
+
+.form-group input::placeholder {
+    color: #9ca3af;
+}
+
+.input-hint {
+    font-size: 0.8rem;
+    color: #9ca3af;
+    margin-top: 6px;
+}
+
+/* ========== RADIO GROUP ========== */
+.radio-group {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+.radio-option {
+    cursor: pointer;
+}
+
+.radio-option input {
+    display: none;
+}
+
+.radio-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 25px;
+    background: #f8fafc;
+    border: 2px solid #e5e7eb;
+    border-radius: 16px;
+    transition: all 0.3s;
+    text-align: center;
+}
+
+.radio-option input:checked + .radio-box {
+    background: linear-gradient(135deg, #eff6ff, #dbeafe);
+    border-color: #3b82f6;
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.2);
+}
+
+.radio-icon {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+
+.radio-label {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 5px;
+}
+
+.radio-desc {
+    font-size: 0.85rem;
+    color: #6b7280;
+}
+
+/* ========== FORM ACTIONS ========== */
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    margin-top: 40px;
+    padding-top: 30px;
+    border-top: 1px solid #e5e7eb;
+}
+
+.btn-primary,
+.btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 30px;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-decoration: none;
+    border: none;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: white;
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+}
+
+.btn-secondary {
+    background: #f3f4f6;
+    color: #4b5563;
+}
+
+.btn-secondary:hover {
+    background: #e5e7eb;
+}
+
+/* ========== LOADING STATE ========== */
+.btn-primary.loading {
+    opacity: 0.7;
+    pointer-events: none;
+}
+
+.btn-primary.loading .btn-icon {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 768px) {
+    .container {
+        padding: 20px;
+    }
+    
+    .form-header {
+        padding: 30px 20px;
+    }
+    
+    .student-form {
+        padding: 25px;
+    }
+    
+    .photo-upload-section {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .form-group.full-width {
+        grid-column: span 1;
+    }
+    
+    .radio-group {
+        grid-template-columns: 1fr;
+    }
+    
+    .form-actions {
+        flex-direction: column;
+    }
+    
+    .btn-primary,
+    .btn-secondary {
+        width: 100%;
+        justify-content: center;
+    }
+}

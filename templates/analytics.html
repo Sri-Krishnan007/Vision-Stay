@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>VisionStay | Analytics Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/analytics.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+<!-- ================= TOP BAR ================= -->
+<header class="topbar">
+    <div class="logo">
+        <a href="/admin/dashboard" class="back-link">← Back</a>
+        <span>VisionStay Analytics</span>
+    </div>
+    <div class="top-actions">
+        <span class="admin-name">Admin</span>
+        <a href="/logout" class="logout-btn">Logout</a>
+    </div>
+</header>
+
+<!-- ================= MAIN CONTENT ================= -->
+<main class="analytics-container">
+
+    <!-- ========== STATS CARDS ========== -->
+    <section class="stats-section">
+        <h2>📊 Overview Statistics</h2>
+        <div class="stats-grid">
+            <div class="stat-card blue">
+                <div class="stat-icon">👨‍🎓</div>
+                <div class="stat-info">
+                    <span class="stat-value" id="totalStudents">--</span>
+                    <span class="stat-label">Total Students</span>
+                </div>
+            </div>
+            <div class="stat-card green">
+                <div class="stat-icon">🏠</div>
+                <div class="stat-info">
+                    <span class="stat-value" id="hostellers">--</span>
+                    <span class="stat-label">Hostellers</span>
+                </div>
+            </div>
+            <div class="stat-card purple">
+                <div class="stat-icon">🏫</div>
+                <div class="stat-info">
+                    <span class="stat-value" id="dayScholars">--</span>
+                    <span class="stat-label">Day Scholars</span>
+                </div>
+            </div>
+            <div class="stat-card orange">
+                <div class="stat-icon">📍</div>
+                <div class="stat-info">
+                    <span class="stat-value" id="entriesToday">--</span>
+                    <span class="stat-label">Entries Today</span>
+                </div>
+            </div>
+            <div class="stat-card red">
+                <div class="stat-icon">🎭</div>
+                <div class="stat-info">
+                    <span class="stat-value" id="maskedAlerts">--</span>
+                    <span class="stat-label">Masked Alerts</span>
+                </div>
+            </div>
+            <div class="stat-card dark">
+                <div class="stat-icon">❓</div>
+                <div class="stat-info">
+                    <span class="stat-value" id="unknownAlerts">--</span>
+                    <span class="stat-label">Unknown Persons</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== CHARTS SECTION ========== -->
+    <section class="charts-section">
+        <h2>📈 Attendance Analytics</h2>
+        
+        <div class="charts-grid">
+            <!-- Attendance Trend Chart -->
+            <div class="chart-card large">
+                <div class="chart-header">
+                    <h3>Attendance Trend</h3>
+                    <div class="chart-controls">
+                        <button class="trend-btn active" data-days="7">7 Days</button>
+                        <button class="trend-btn" data-days="14">14 Days</button>
+                        <button class="trend-btn" data-days="30">30 Days</button>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <canvas id="attendanceTrendChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Distribution Pie Chart -->
+            <div class="chart-card">
+                <div class="chart-header">
+                    <h3>Student Distribution</h3>
+                </div>
+                <div class="chart-container">
+                    <canvas id="distributionChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Hourly Pattern Chart -->
+            <div class="chart-card">
+                <div class="chart-header">
+                    <h3>Today's Hourly Pattern</h3>
+                </div>
+                <div class="chart-container">
+                    <canvas id="hourlyChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Top Visitors Chart -->
+            <div class="chart-card">
+                <div class="chart-header">
+                    <h3>Top Visitors (Last 7 Days)</h3>
+                </div>
+                <div class="chart-container">
+                    <canvas id="topVisitorsChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== ATTENDANCE TABLE ========== -->
+    <section class="table-section">
+        <h2>📋 Attendance Records</h2>
+        
+        <!-- Filters -->
+        <div class="table-filters">
+            <div class="filter-group">
+                <label>Start Date:</label>
+                <input type="date" id="filterStartDate">
+            </div>
+            <div class="filter-group">
+                <label>End Date:</label>
+                <input type="date" id="filterEndDate">
+            </div>
+            <div class="filter-group">
+                <label>Student Name:</label>
+                <input type="text" id="filterName" placeholder="Search by name...">
+            </div>
+            <div class="filter-group">
+                <label>Student Type:</label>
+                <select id="filterType">
+                    <option value="all">All Students</option>
+                    <option value="hosteller">Hostellers Only</option>
+                    <option value="dayscholar">Day Scholars Only</option>
+                </select>
+            </div>
+            <div class="filter-actions">
+                <button class="apply-btn" onclick="applyFilters()">🔍 Apply Filters</button>
+                <button class="clear-btn" onclick="clearFilters()">✕ Clear</button>
+                <button class="export-btn" onclick="exportTable()">📥 Export CSV</button>
+            </div>
+        </div>
+
+        <!-- Results Info -->
+        <div class="table-info">
+            <span id="recordCount">0 records found</span>
+        </div>
+
+        <!-- Table -->
+        <div class="table-wrapper">
+            <table id="attendanceTable">
+                <thead>
+                    <tr>
+                        <th>Roll No</th>
+                        <th>Name</th>
+                        <th>Course</th>
+                        <th>Year</th>
+                        <th>Type</th>
+                        <th>Date</th>
+                        <th>Entries</th>
+                        <th>Entry Times</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                    <!-- Populated by JS -->
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+</main>
+
+<script src="{{ url_for('static', filename='js/analytics.js') }}"></script>
+</body>
+</html>

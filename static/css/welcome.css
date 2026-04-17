@@ -1,0 +1,601 @@
+/* ==================== RESET & BASE ==================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary: #00d4ff;
+    --primary-dark: #0099cc;
+    --secondary: #7c3aed;
+    --accent: #f59e0b;
+    --dark-bg: #0a0e17;
+    --card-bg: rgba(255, 255, 255, 0.05);
+    --text: #ffffff;
+    --text-muted: rgba(255, 255, 255, 0.7);
+    --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --gradient-2: linear-gradient(135deg, #00d4ff 0%, #7c3aed 100%);
+    --gradient-3: linear-gradient(135deg, #0a0e17 0%, #1a1f2e 50%, #0d1117 100%);
+}
+
+body {
+    font-family: 'Segoe UI', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--gradient-3);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* ==================== BACKGROUND ANIMATION ==================== */
+.bg-animation {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: hidden;
+}
+
+#particles {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: var(--primary);
+    border-radius: 50%;
+    opacity: 0.5;
+    animation: float 15s infinite ease-in-out;
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.5;
+    }
+    90% {
+        opacity: 0.5;
+    }
+    100% {
+        transform: translateY(-100vh) rotate(720deg);
+        opacity: 0;
+    }
+}
+
+/* ==================== CONTAINER ==================== */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* ==================== HERO SECTION ==================== */
+.hero {
+    text-align: center;
+    padding: 40px 20px;
+    animation: fadeInUp 1s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.logo-container {
+    margin-bottom: 30px;
+}
+
+.logo-icon {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto 20px;
+    background: var(--gradient-2);
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    color: white;
+    box-shadow: 0 20px 60px rgba(0, 212, 255, 0.3);
+    animation: pulse 2s infinite ease-in-out;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 20px 60px rgba(0, 212, 255, 0.3);
+    }
+    50% {
+        transform: scale(1.05);
+        box-shadow: 0 25px 80px rgba(0, 212, 255, 0.4);
+    }
+}
+
+.logo-text {
+    font-size: 4rem;
+    font-weight: 800;
+    letter-spacing: 3px;
+}
+
+.vision {
+    background: var(--gradient-2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.stay {
+    color: var(--text);
+}
+
+.tagline {
+    font-size: 1.4rem;
+    color: var(--text-muted);
+    margin-top: 15px;
+    min-height: 35px;
+    font-weight: 300;
+}
+
+/* ==================== FEATURES ==================== */
+.features {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin: 40px 0;
+    flex-wrap: wrap;
+}
+
+.feature {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 20px 30px;
+    background: var(--card-bg);
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+    animation: fadeInUp 1s ease-out both;
+}
+
+.feature:nth-child(1) { animation-delay: 0.2s; }
+.feature:nth-child(2) { animation-delay: 0.4s; }
+.feature:nth-child(3) { animation-delay: 0.6s; }
+
+.feature:hover {
+    transform: translateY(-5px);
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--primary);
+}
+
+.feature i {
+    font-size: 1.8rem;
+    color: var(--primary);
+}
+
+.feature span {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+}
+
+/* ==================== AUTO MESSAGE ==================== */
+.auto-msg {
+    margin: 30px 0;
+    padding: 15px 30px;
+    background: rgba(0, 212, 255, 0.1);
+    border: 1px solid rgba(0, 212, 255, 0.3);
+    border-radius: 50px;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 1rem;
+    color: var(--primary);
+    animation: slideIn 0.5s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* ==================== PRIMARY BUTTON ==================== */
+.primary-btn {
+    padding: 18px 45px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    background: var(--gradient-2);
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    color: white;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.primary-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.primary-btn:hover::before {
+    left: 100%;
+}
+
+.primary-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 40px rgba(0, 212, 255, 0.4);
+}
+
+.primary-btn.glow {
+    animation: glow 2s infinite ease-in-out;
+}
+
+@keyframes glow {
+    0%, 100% {
+        box-shadow: 0 5px 30px rgba(0, 212, 255, 0.3);
+    }
+    50% {
+        box-shadow: 0 10px 50px rgba(0, 212, 255, 0.5);
+    }
+}
+
+/* ==================== LOGIN SECTION ==================== */
+.login-section {
+    display: none;
+    width: 100%;
+    max-width: 500px;
+    animation: fadeInUp 0.6s ease-out;
+}
+
+.login-section.active {
+    display: block;
+}
+
+.login-card {
+    padding: 40px;
+    border-radius: 25px;
+    position: relative;
+}
+
+.glass {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+}
+
+.card-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.card-header h2 {
+    font-size: 1.6rem;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+}
+
+.card-header h2 i {
+    color: var(--primary);
+}
+
+.card-header p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+}
+
+/* ==================== ROLE BUTTONS ==================== */
+.role-buttons {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.role-btn {
+    flex: 1;
+    padding: 20px 15px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    cursor: pointer;
+    color: var(--text);
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.role-btn i {
+    font-size: 2rem;
+    color: var(--text-muted);
+    transition: color 0.3s ease;
+}
+
+.role-btn span {
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.role-btn small {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+.role-btn:hover, .role-btn.active {
+    border-color: var(--primary);
+    background: rgba(0, 212, 255, 0.1);
+}
+
+.role-btn:hover i, .role-btn.active i {
+    color: var(--primary);
+}
+
+/* ==================== LOGIN BOX ==================== */
+.login-box {
+    display: none;
+    animation: slideUp 0.4s ease-out;
+}
+
+.login-box.active {
+    display: block;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.form-header {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.icon-circle {
+    width: 70px;
+    height: 70px;
+    margin: 0 auto 15px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+}
+
+.admin-icon {
+    background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
+}
+
+.student-icon {
+    background: linear-gradient(135deg, #00d4ff 0%, #0099cc 100%);
+}
+
+.form-header h3 {
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+
+/* ==================== INPUT GROUPS ==================== */
+.input-group {
+    position: relative;
+    margin-bottom: 18px;
+}
+
+.input-group i {
+    position: absolute;
+    left: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+    font-size: 1rem;
+    transition: color 0.3s ease;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 16px 16px 16px 50px;
+    font-size: 1rem;
+    background: rgba(255, 255, 255, 0.08);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    color: var(--text);
+    transition: all 0.3s ease;
+}
+
+.input-group input::placeholder {
+    color: var(--text-muted);
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: var(--primary);
+    background: rgba(0, 212, 255, 0.05);
+}
+
+.input-group input:focus + i,
+.input-group:focus-within i {
+    color: var(--primary);
+}
+
+/* ==================== SUBMIT BUTTON ==================== */
+.submit-btn {
+    width: 100%;
+    padding: 16px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    background: var(--gradient-1);
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+}
+
+.submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(124, 58, 237, 0.4);
+}
+
+.student-submit {
+    background: var(--gradient-2);
+}
+
+.student-submit:hover {
+    box-shadow: 0 10px 30px rgba(0, 212, 255, 0.4);
+}
+
+/* ==================== HINT & BACK BUTTON ==================== */
+.hint {
+    font-size: 0.85rem;
+    color: var(--accent);
+    margin: 15px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px;
+    background: rgba(245, 158, 11, 0.1);
+    border-radius: 8px;
+}
+
+.back-btn {
+    width: 100%;
+    padding: 14px;
+    margin-top: 20px;
+    font-size: 0.95rem;
+    background: transparent;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    cursor: pointer;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: all 0.3s ease;
+}
+
+.back-btn:hover {
+    border-color: var(--text);
+    color: var(--text);
+}
+
+/* ==================== FOOTER ==================== */
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+    padding: 15px;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    background: linear-gradient(to top, rgba(10, 14, 23, 0.9), transparent);
+}
+
+/* ==================== UTILITIES ==================== */
+.hidden {
+    display: none !important;
+}
+
+/* ==================== RESPONSIVE ==================== */
+@media (max-width: 768px) {
+    .logo-text {
+        font-size: 2.8rem;
+    }
+    
+    .logo-icon {
+        width: 80px;
+        height: 80px;
+        font-size: 2.5rem;
+    }
+    
+    .features {
+        gap: 15px;
+    }
+    
+    .feature {
+        padding: 15px 20px;
+    }
+    
+    .login-card {
+        padding: 25px;
+        margin: 0 10px;
+    }
+    
+    .role-buttons {
+        flex-direction: column;
+    }
+    
+    .auto-msg {
+        padding: 12px 20px;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .logo-text {
+        font-size: 2.2rem;
+    }
+    
+    .tagline {
+        font-size: 1.1rem;
+    }
+    
+    .primary-btn {
+        padding: 15px 35px;
+        font-size: 1rem;
+    }
+}
